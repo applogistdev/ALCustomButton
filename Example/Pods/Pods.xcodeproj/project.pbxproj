@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		5856CD4F9BA01D36C092C8DAFFBCF889 /* ALCustomButton-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = BA4B60630988AB349746AF0BD1627F29 /* ALCustomButton-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5C4FC58E31964C3E5A99BDE67EF17FAF /* Pods-ALCustomButton_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEE95C0A702FB60EA3A702AC532E123 /* Pods-ALCustomButton_Example-dummy.m */; };
-		6E3CAE98B3E8EBEF23CAAA651AAA6B9C /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0701E5FC7E1DDDB27653438ACA4125C /* ReplaceMe.swift */; };
+		6E3CAE98B3E8EBEF23CAAA651AAA6B9C /* ALButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0701E5FC7E1DDDB27653438ACA4125C /* ALButton.swift */; };
 		7B32D4DD0B8C7A3EA2E1C2BEF952F466 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 		924F499E594F1D0425222C2F6E7E2AD6 /* Pods-ALCustomButton_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D2E7E39FD919106635B2BF552910FACA /* Pods-ALCustomButton_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A1896DB090E19C40BF341183681F47BA /* Pods-ALCustomButton_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CDEAB0E9E8CA4C8B8DC6D18BA85D80D /* Pods-ALCustomButton_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -59,7 +59,7 @@
 		B4459237B1D7EF826C2212B69AAD1EE2 /* Pods-ALCustomButton_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ALCustomButton_Example-Info.plist"; sourceTree = "<group>"; };
 		B9146A775B1AACFB67AA473195596C1C /* ALCustomButton.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ALCustomButton.modulemap; sourceTree = "<group>"; };
 		BA4B60630988AB349746AF0BD1627F29 /* ALCustomButton-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ALCustomButton-umbrella.h"; sourceTree = "<group>"; };
-		C0701E5FC7E1DDDB27653438ACA4125C /* ReplaceMe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReplaceMe.swift; path = ALCustomButton/Classes/ReplaceMe.swift; sourceTree = "<group>"; };
+		C0701E5FC7E1DDDB27653438ACA4125C /* ALButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ALButton.swift; path = ALCustomButton/Classes/ALButton.swift; sourceTree = "<group>"; };
 		C95669CAD8B17D9CF630ADBD0F239A85 /* Pods-ALCustomButton_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ALCustomButton_Tests-Info.plist"; sourceTree = "<group>"; };
 		C9A8185D48C664E41FCAD36A62645192 /* Pods-ALCustomButton_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ALCustomButton_Tests-dummy.m"; sourceTree = "<group>"; };
 		CC1DF6938E907A9DC3F62114069A662E /* ALCustomButton.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = ALCustomButton.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -151,7 +151,7 @@
 		7D19F69FE180902B15216E906CFF5D49 /* ALCustomButton */ = {
 			isa = PBXGroup;
 			children = (
-				C0701E5FC7E1DDDB27653438ACA4125C /* ReplaceMe.swift */,
+				C0701E5FC7E1DDDB27653438ACA4125C /* ALButton.swift */,
 				F84ADB17E74DA50A6A6A74C6A8736E7B /* Pod */,
 				6A629B283F4FAEEC863A30024A3ED514 /* Support Files */,
 			);
@@ -381,7 +381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE00F3DBA62A8DFE40F3279B4942BE7B /* ALCustomButton-dummy.m in Sources */,
-				6E3CAE98B3E8EBEF23CAAA651AAA6B9C /* ReplaceMe.swift in Sources */,
+				6E3CAE98B3E8EBEF23CAAA651AAA6B9C /* ALButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
