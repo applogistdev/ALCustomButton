@@ -1,0 +1,6 @@
+framework module ALCustomButton {
+  umbrella header "ALCustomButton-umbrella.h"
+
+  export *
+  module * { export * }
+}

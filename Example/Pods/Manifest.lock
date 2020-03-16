@@ -1,0 +1,16 @@
+PODS:
+  - ALCustomButton (0.1.0)
+
+DEPENDENCIES:
+  - ALCustomButton (from `../`)
+
+EXTERNAL SOURCES:
+  ALCustomButton:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ALCustomButton: 41a3432b7d5497363c6f6f27d74fcb09144fc220
+
+PODFILE CHECKSUM: 6734651c7ad09384632e37307ce4056d2c2bd501
+
+COCOAPODS: 1.8.4

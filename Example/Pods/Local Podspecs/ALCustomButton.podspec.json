@@ -1,0 +1,22 @@
+{
+  "name": "ALCustomButton",
+  "version": "0.1.0",
+  "summary": "A short description of ALCustomButton.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/unalCe/ALCustomButton",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "unalCe": "uunal.celik@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/unalCe/ALCustomButton.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "ALCustomButton/Classes/**/*"
+}
