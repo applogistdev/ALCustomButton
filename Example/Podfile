@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'ALCustomButton_Example' do
+  pod 'ALCustomButton', :path => '../'
+
+  target 'ALCustomButton_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
