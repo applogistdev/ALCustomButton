@@ -10,6 +10,11 @@ import UIKit
 
 public class ALButton: UIControl {
     
+    public enum ContentAlignment {
+        case centered
+        case spreaded
+    }
+    
     public enum IconPosition {
         case top
         case bottom
@@ -17,6 +22,10 @@ public class ALButton: UIControl {
         case right
     }
     
+    public enum GradientDirection {
+        case vertical
+        case horizontal
+    }
     
     // MARK: - Properties
     public var icon: UIImage? { didSet { setNeedsLayout() } }
@@ -35,17 +44,24 @@ public class ALButton: UIControl {
     private(set) var iconSize: CGFloat = 32 { didSet { setNeedsLayout() } }
     
     /// Default is not rounded
-    private(set) var isRounded: Bool = false
+    private(set) var isRounded: Bool = false { didSet { setNeedsLayout() } }
     
     /// Corner Radius -> Default value is 8
-    public var cornerRadi: CGFloat {
+    public var cornerRadius: CGFloat {
         get {
             layer.cornerRadius
         } set {
             isRounded = false
-            roundEdges()
+            layer.cornerRadius = newValue
         }
     }
+    
+    
+    /// Constraints for stackview
+    private var centeredContentConstraints: [NSLayoutConstraint] = []
+    private var spreadedContentConstraints: [NSLayoutConstraint] = []
+    /// Current content alignment status. Spreaded is where icon is close to the edges. Centered is where icon is close to the label.
+    private(set) var contentAlignment: ContentAlignment = .centered
     
     /// Title label's font --> Default is systemFont of size 18
     private(set) var textFont: UIFont = UIFont.systemFont(ofSize: 18) { didSet { setNeedsLayout() } }
@@ -56,10 +72,16 @@ public class ALButton: UIControl {
     /// Title label's text color --> Default is UIColor.black
     private(set) var titleTextColor: UIColor = .black { didSet { setNeedsLayout() } }
     
+    /// Gradient Layer
+    private var gradientLayer: CAGradientLayer?
+    private var shouldApplyGradient: Bool = false { didSet { setNeedsLayout() } }
+    
+    private var gradientColors: [CGColor]?
+    private var gradientDirection: GradientDirection?
     
     /// Shadow Properties
     private var shadowLayer: CAShapeLayer!
-    private var shouldApplyShadow: Bool = false
+    private var shouldApplyShadow: Bool = false { didSet { setNeedsLayout() } }
     
     private var shadowColor: UIColor?
     private var shadowRadius: CGFloat?
@@ -68,6 +90,7 @@ public class ALButton: UIControl {
     private var innerShadows: Bool?
     
     
+
     // MARK: - Views
     
     private lazy var stackView: UIStackView = {
@@ -109,8 +132,8 @@ public class ALButton: UIControl {
         t.textAlignment = titleAlignment
         t.textColor = titleTextColor
         t.adjustsFontSizeToFitWidth = true
-        t.minimumScaleFactor = 0.7
-        t.numberOfLines = 0
+        t.minimumScaleFactor = 0.6
+        t.numberOfLines = 1
         t.sizeToFit()
         t.translatesAutoresizingMaskIntoConstraints = false
         return t
@@ -124,7 +147,9 @@ public class ALButton: UIControl {
         
         setupStackView()
         setupMargins()
+        roundEdges()
         applyShadow()
+        applyGradientBackground()
     }
     
     public override init(frame: CGRect) {
@@ -149,7 +174,7 @@ public class ALButton: UIControl {
         setupAnimatingPressActions()
     }
     
-    func setupAnimatingPressActions() {
+    private func setupAnimatingPressActions() {
         if isAnimatable {
             addTarget(self, action: #selector(animateDown), for: [.touchDown, .touchDragEnter])
             addTarget(self, action: #selector(animateUp), for: [.touchDragExit, .touchCancel, .touchUpInside, .touchUpOutside])
@@ -163,19 +188,29 @@ public class ALButton: UIControl {
         backgroundColor = .clear
         
         /// Round edges with the default corner radius value of 8
+        cornerRadius = 8
         roundEdges()
-        setBorder(width: 1, color: .lightGray)
     }
     
     private func setupConstraints() {
         addSubview(stackView)
         
-        NSLayoutConstraint.activate ([
+        centeredContentConstraints = [
+            stackView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 4),
+            stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            stackView.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: 4)
+        ]
+        
+        spreadedContentConstraints = [
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+        ]
+        
+        NSLayoutConstraint.activate(centeredContentConstraints)
+        contentAlignment = .centered
         
         defaultSetup()
     }
@@ -187,7 +222,8 @@ public class ALButton: UIControl {
         
         let isVertical = (iconPosition == .bottom || iconPosition == .top)
         stackView.axis = isVertical ? .vertical : .horizontal
-        stackView.distribution = isVertical ? .fillEqually : .fill
+        stackView.distribution = isVertical ? .fillProportionally : .fill
+        stackView.spacing = isVertical ? 4 : 16
         
         /// Add title label first, if icon is on the right or on the bottom
         if iconPosition == .bottom || iconPosition == .right {
@@ -229,9 +265,46 @@ public class ALButton: UIControl {
         backgroundColor = UIColor(patternImage: image)
     }
     
-    /// Clear background color to clear color.
-    public func clearBackgroundColors() {
-        backgroundColor = nil // == .clear
+    
+    /// Set gradient background to the button
+    /// - Parameters:
+    ///   - colors: Gradient colors to be applied
+    ///   - direction: Gradient direction. Default is horizontal
+    public func setGradientBackground(with colors: [UIColor], direction: GradientDirection = .horizontal) {
+        gradientColors = colors.map { $0.cgColor }
+        gradientDirection = direction
+        shouldApplyGradient = true
+    }
+    
+    /// Apply gradient layer if properties are set but not applied yet.
+    private func applyGradientBackground() {
+        
+        if shouldApplyGradient && gradientLayer == nil {
+            gradientLayer = CAGradientLayer()
+            gradientLayer!.frame = bounds
+            gradientLayer!.cornerRadius = cornerRadius
+            
+            gradientLayer!.colors = gradientColors
+            gradientLayer!.startPoint = gradientDirection == .horizontal ? CGPoint(x: 0.0, y: 0.5) : CGPoint(x: 0.5, y: 0.0)
+            gradientLayer!.endPoint = gradientDirection == .horizontal ? CGPoint(x: 1.0, y: 0.5) : CGPoint(x: 0.5, y: 1.0)
+            
+            if shadowLayer != nil {
+                layer.insertSublayer(gradientLayer!, above: shadowLayer)
+            } else {
+                layer.insertSublayer(gradientLayer!, at: 0)
+            }
+        } else if shouldApplyGradient && gradientLayer != nil {
+            gradientLayer!.cornerRadius = cornerRadius
+            gradientLayer!.removeAllAnimations()
+        }
+    }
+    
+    public func removeGradientBackground() {
+        layer.sublayers?.removeAll(where: {
+            $0 == gradientLayer
+        })
+        gradientLayer = nil
+        shouldApplyGradient = false
     }
     
     /// Set shadow to button
@@ -258,7 +331,7 @@ public class ALButton: UIControl {
         if shouldApplyShadow && shadowLayer == nil {
             shadowLayer = CAShapeLayer()
             
-            let shapePath = CGPath(roundedRect: bounds, cornerWidth: cornerRadi, cornerHeight: cornerRadi, transform: nil)
+            let shapePath = CGPath(roundedRect: bounds, cornerWidth: cornerRadius, cornerHeight: cornerRadius, transform: nil)
             
             shadowLayer.path = shapePath
             shadowLayer.fillColor = backgroundColor?.cgColor
@@ -268,10 +341,10 @@ public class ALButton: UIControl {
             shadowLayer.shadowOffset = shadowOffset ?? .zero
             shadowLayer.shadowOpacity = shadowOpacity ?? 0.5
             
-            layer.insertSublayer(shadowLayer!, at: 0)
+            layer.insertSublayer(shadowLayer, at: 0)
             
             /// If there's background color, there is no need to mask inner shadows.
-            if backgroundColor != .none && !(innerShadows ?? false) {
+            if backgroundColor == .clear && !(innerShadows ?? false) {
                 let maskLayer = CAShapeLayer()
                 maskLayer.path = { () -> UIBezierPath in
                     let path = UIBezierPath()
@@ -285,7 +358,21 @@ public class ALButton: UIControl {
                 maskLayer.fillRule = kCAFillRuleEvenOdd
                 shadowLayer.mask = maskLayer
             }
+            
+        } else if shouldApplyShadow && shadowLayer != nil {     // Only update shadow path if shadowLayer exists.
+            let shapePath = CGPath(roundedRect: bounds, cornerWidth: cornerRadius, cornerHeight: cornerRadius, transform: nil)
+            
+            shadowLayer.path = shapePath
+            shadowLayer.shadowPath = shadowLayer.path
         }
+    }
+    
+    public func removeShadows() {
+        layer.sublayers?.removeAll(where: {
+            $0 == shadowLayer
+        })
+        shadowLayer = nil
+        shouldApplyShadow = false
     }
     
     /// Initialize button with text, icon or both at once
@@ -307,8 +394,25 @@ public class ALButton: UIControl {
     /// Set rounded
     /// - Parameter rounded: is rounded -> Default is true
     public func setRounded(_ rounded: Bool = true) {
-        self.isRounded = rounded
-        roundEdges()
+        isRounded = rounded
+    }
+    
+    /// Set content alignment
+    /// - Parameter alignment: Alignment of the button content. Spreaded is where icon is close to the edges. Centered is where icon is close to the label.
+    public func setContentAlignment(_ alignment: ContentAlignment) {
+        if alignment == contentAlignment { return }
+        
+        switch alignment {
+        case .centered:
+            NSLayoutConstraint.deactivate(spreadedContentConstraints)
+            NSLayoutConstraint.activate(centeredContentConstraints)
+        case .spreaded:
+            NSLayoutConstraint.deactivate(centeredContentConstraints)
+            NSLayoutConstraint.activate(spreadedContentConstraints)
+        }
+        
+        // Set the new value
+        contentAlignment = alignment
     }
     
     /// Set title label's text alignment
@@ -386,7 +490,7 @@ public class ALButton: UIControl {
         if isRounded {
             layer.cornerRadius = self.frame.height / 2
         } else {
-            layer.cornerRadius = 8  // Default value
+            layer.cornerRadius = cornerRadius
         }
     }
     
