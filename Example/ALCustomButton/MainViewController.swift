@@ -9,68 +9,67 @@
 import UIKit
 import ALCustomButton
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
     
     @IBOutlet weak var exampleButton: ALButton!
+    
+    @IBOutlet weak var optionsStackView: UIStackView!
     
     @IBOutlet weak var titleAlignmentStackView: UIStackView!
     @IBOutlet weak var cornerRadSlider: UISlider!
     
-    private lazy var toggleButton: ALButton = {
+    /// Programmatically
+    private lazy var showroomButton: ALButton = {
         let tb = ALButton()
-        tb.setRounded()
+        tb.setTextFont(UIFont(name: "ProximaNova-Bold", size: 16))
         tb.text = "Show me some inspiration!"
-        tb.setTextColor(.orange)
-        tb.addTarget(self, action: #selector(colorToggleButtonTapped), for: .touchUpInside)
+        tb.backgroundColor = UIColor(red: 0xFF/255, green: 0xE7/255, blue: 0x5E/255, alpha: 1) // hex: ffe75e
+        tb.addTarget(self, action: #selector(navigateToShowroom), for: .touchUpInside)
         tb.translatesAutoresizingMaskIntoConstraints = false
         return tb
     }()
     
+    
     // MARK: - Properties
     
+    private var lightGreen = UIColor(red: 177/255, green: 1, blue: 205/255, alpha: 1)
     private var spotifyGreen = UIColor(red: 30/255, green: 215/255, blue: 96/255, alpha: 1)
-    // private var facebookBlue
     
-    
-    private var isInDarkMode: Bool = false
     
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let button = ALButton(frame: CGRect(x: 50, y: 450, width: 250, height: 50))
-        button.setRounded()
-        button.backgroundColor = .orange
-        button.text = "Deneme Shadow"
-        button.setBorder(width: 0)
-        button.setShadow(color: .darkGray, radius: 6, offset: .zero, opacity: 0.4, innerShadows: false)
-        
-        view.addSubview(button)
-        
         debugPrintFontNames()
         
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        
         setupExampleButton()
+        setupShowroomButtonConstraints()
         
         titleAlignmentStackView.alpha = 0.6
         titleAlignmentStackView.isUserInteractionEnabled = false
     }
     
-    
     // MARK: - UI Setup
     
     private func setupExampleButton() {
         exampleButton.backgroundColor = spotifyGreen
-        // exampleButton.setGradientBackground(with: [.red, .orange])
-        exampleButton.setRounded()
-        exampleButton.setBorder(width: 0)
+        //exampleButton.setRounded()
         exampleButton.setIconAndText(icon: UIImage(named: "spotify-dark"), text: "Spotify")
         exampleButton.setTextFont(UIFont(name: "ProximaNova-Bold", size: 20))
         exampleButton.setShadow(color: .black, radius: 6, offset: .zero, opacity: 0.4, innerShadows: false)
     }
     
-    private func setupExamplesNavigationButton() {
+    private func setupShowroomButtonConstraints() {
+        view.addSubview(showroomButton)
         
+        NSLayoutConstraint.activate([
+            showroomButton.topAnchor.constraint(equalTo: optionsStackView.bottomAnchor, constant: 60),
+            showroomButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            showroomButton.heightAnchor.constraint(equalToConstant: 50),
+            showroomButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5)
+        ])
     }
     
     
@@ -145,38 +144,31 @@ class ViewController: UIViewController {
     
     @IBAction func shadowSwitchChanged(_ sender: UISwitch) {
         if sender.isOn {
-            exampleButton.setShadow(color: .darkGray, radius: 6, offset: .zero, opacity: 0.4, innerShadows: false)
+            exampleButton.setShadow(color: .black, radius: 6, offset: .zero, opacity: 0.4, innerShadows: false)
         } else {
-            exampleButton.clearShadows()
+            exampleButton.removeShadows()
         }
     }
     
     
-    @objc func colorToggleButtonTapped(_ sender: ALButton) {
-        isInDarkMode.toggle()
-        
-        if isInDarkMode {
-            exampleButton.icon = UIImage(named: "spotify-green")
-            exampleButton.backgroundColor = .clear
-            exampleButton.setBorder(width: 2, color: spotifyGreen)
-            exampleButton.setTextColor(spotifyGreen)
-            exampleButton.setContentAlignment(.centered)
+    @IBAction func gradientSwitchChanged(_ sender: UISwitch) {
+        if sender.isOn {
+            exampleButton.setGradientBackground(with: [lightGreen, spotifyGreen], direction: .horizontal)
         } else {
-            exampleButton.icon = UIImage(named: "spotify-dark")
-            exampleButton.backgroundColor = spotifyGreen
-            exampleButton.setBorder(width: 0)
-            exampleButton.setTextColor(.black)
-            exampleButton.setIconPosition(.bottom)
-            exampleButton.setIconSize(12)
-            exampleButton.setContentAlignment(.spreaded)
+            exampleButton.removeGradientBackground()
         }
+    }
+    
+    // MARK: - Navigation
+    @objc private func navigateToShowroom() {
+        navigationController?.pushViewController(ShowRoomViewController(), animated: true)
     }
     
 }
 
 
 /// MARK: -
-extension ViewController {
+extension MainViewController {
     private func debugPrintFontNames() {
         for family: String in UIFont.familyNames
         {
