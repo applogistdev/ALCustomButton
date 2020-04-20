@@ -10,11 +10,13 @@
 		0AC33057801B740196EB221E /* Pods_ALCustomButton_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FE6B86D9D6C5114F91C2731 /* Pods_ALCustomButton_Tests.framework */; };
 		2A44FC728169306C378D82A8 /* Pods_ALCustomButton_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 334B471B46DB32B4BE68E858 /* Pods_ALCustomButton_Example.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
-		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
+		607FACD81AFB9204008FA782 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* MainViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		902AACAF244B4A9100CFEC35 /* ShowRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902AACAE244B4A9100CFEC35 /* ShowRoomViewController.swift */; };
+		9030689824470E4000317D1B /* FontsFree-Net-Proxima-Nova-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9030689724470E4000317D1B /* FontsFree-Net-Proxima-Nova-Bold.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,7 +37,7 @@
 		607FACD01AFB9204008FA782 /* ALCustomButton_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ALCustomButton_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		607FACD71AFB9204008FA782 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -44,6 +46,8 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		6AD3480CE35FB1C0866DA920 /* Pods-ALCustomButton_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ALCustomButton_Example.debug.xcconfig"; path = "Target Support Files/Pods-ALCustomButton_Example/Pods-ALCustomButton_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		79A8452E3C5A4015980C5197 /* Pods-ALCustomButton_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ALCustomButton_Tests.debug.xcconfig"; path = "Target Support Files/Pods-ALCustomButton_Tests/Pods-ALCustomButton_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		902AACAE244B4A9100CFEC35 /* ShowRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowRoomViewController.swift; sourceTree = "<group>"; };
+		9030689724470E4000317D1B /* FontsFree-Net-Proxima-Nova-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FontsFree-Net-Proxima-Nova-Bold.otf"; sourceTree = "<group>"; };
 		9FE6B86D9D6C5114F91C2731 /* Pods_ALCustomButton_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ALCustomButton_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0344BAF7AED436B03EBFC53 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		FB32848C8FB0185B4C919EE3 /* Pods-ALCustomButton_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ALCustomButton_Tests.release.xcconfig"; path = "Target Support Files/Pods-ALCustomButton_Tests/Pods-ALCustomButton_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -93,8 +97,10 @@
 		607FACD21AFB9204008FA782 /* Example for ALCustomButton */ = {
 			isa = PBXGroup;
 			children = (
+				9030689624470E2800317D1B /* Fonts */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				607FACD71AFB9204008FA782 /* MainViewController.swift */,
+				902AACAE244B4A9100CFEC35 /* ShowRoomViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -148,6 +154,14 @@
 				FB32848C8FB0185B4C919EE3 /* Pods-ALCustomButton_Tests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		9030689624470E2800317D1B /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				9030689724470E4000317D1B /* FontsFree-Net-Proxima-Nova-Bold.otf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 		F730B95860B6782F0B3C584C /* Frameworks */ = {
@@ -212,6 +226,7 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 77H998AFPB;
 						LastSwiftMigration = 0900;
 					};
 					607FACE41AFB9204008FA782 = {
@@ -248,6 +263,7 @@
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				9030689824470E4000317D1B /* FontsFree-Net-Proxima-Nova-Bold.otf in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,8 +347,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				607FACD81AFB9204008FA782 /* MainViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				902AACAF244B4A9100CFEC35 /* ShowRoomViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,6 +495,7 @@
 			baseConfigurationReference = 6AD3480CE35FB1C0866DA920 /* Pods-ALCustomButton_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 77H998AFPB;
 				INFOPLIST_FILE = ALCustomButton/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -494,6 +512,7 @@
 			baseConfigurationReference = 2E6EFA58D44B84854EA4AE10 /* Pods-ALCustomButton_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 77H998AFPB;
 				INFOPLIST_FILE = ALCustomButton/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
