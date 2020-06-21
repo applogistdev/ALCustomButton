@@ -47,7 +47,7 @@ public class ALButton: UIControl {
     private(set) var isRounded: Bool = false { didSet { setNeedsLayout() } }
     
     /// Corner Radius -> Default value is 8
-    public var cornerRadius: CGFloat {
+    public var cornerRad: CGFloat {
         get {
             layer.cornerRadius
         } set {
@@ -56,6 +56,8 @@ public class ALButton: UIControl {
         }
     }
     
+    /// Content margings
+    private(set) var customContentMargins: UIEdgeInsets? { didSet { setNeedsLayout() } }
     
     /// Constraints for stackview
     private var centeredContentConstraints: [NSLayoutConstraint] = []
@@ -188,7 +190,7 @@ public class ALButton: UIControl {
         backgroundColor = .clear
         
         /// Round edges with the default corner radius value of 8
-        cornerRadius = 8
+        cornerRad = 8
         roundEdges()
     }
     
@@ -242,6 +244,11 @@ public class ALButton: UIControl {
     
     /// This should be called whenever an update happens in case of icon or text set.
     private func setupMargins() {
+        if customContentMargins != nil {
+            stackView.layoutMargins = customContentMargins!
+            return
+        }
+        
         /// No borders and round edges if only icon will be displayed. --> Bordered icons istenirse üzerine sonradan tekrar eklenmeli.
         if icon != nil && text == nil {
             /// If only icon exists.
@@ -282,7 +289,7 @@ public class ALButton: UIControl {
         if shouldApplyGradient && gradientLayer == nil {
             gradientLayer = CAGradientLayer()
             gradientLayer!.frame = bounds
-            gradientLayer!.cornerRadius = cornerRadius
+            gradientLayer!.cornerRadius = cornerRad
             
             gradientLayer!.colors = gradientColors
             gradientLayer!.startPoint = gradientDirection == .horizontal ? CGPoint(x: 0.0, y: 0.5) : CGPoint(x: 0.5, y: 0.0)
@@ -294,7 +301,7 @@ public class ALButton: UIControl {
                 layer.insertSublayer(gradientLayer!, at: 0)
             }
         } else if shouldApplyGradient && gradientLayer != nil {
-            gradientLayer!.cornerRadius = cornerRadius
+            gradientLayer!.cornerRadius = cornerRad
             gradientLayer!.removeAllAnimations()
         }
     }
@@ -331,7 +338,7 @@ public class ALButton: UIControl {
         if shouldApplyShadow && shadowLayer == nil {
             shadowLayer = CAShapeLayer()
             
-            let shapePath = CGPath(roundedRect: bounds, cornerWidth: cornerRadius, cornerHeight: cornerRadius, transform: nil)
+            let shapePath = CGPath(roundedRect: bounds, cornerWidth: cornerRad, cornerHeight: cornerRad, transform: nil)
             
             shadowLayer.path = shapePath
             shadowLayer.fillColor = backgroundColor?.cgColor
@@ -360,7 +367,7 @@ public class ALButton: UIControl {
             }
             
         } else if shouldApplyShadow && shadowLayer != nil {     // Only update shadow path if shadowLayer exists.
-            let shapePath = CGPath(roundedRect: bounds, cornerWidth: cornerRadius, cornerHeight: cornerRadius, transform: nil)
+            let shapePath = CGPath(roundedRect: bounds, cornerWidth: cornerRad, cornerHeight: cornerRad, transform: nil)
             
             shadowLayer.path = shapePath
             shadowLayer.shadowPath = shadowLayer.path
@@ -447,7 +454,7 @@ public class ALButton: UIControl {
     /// Set title text color
     /// - Parameter color: text color
     public func setTextColor(_ color: UIColor) {
-        self.titleTextColor = color
+        titleTextColor = color
     }
     
     /// Create border with specific width and color. ----> ! !  If using with "setBackgroundColorWith(patternImage:)", call this method after the setBackgroundColorWith(patternImage:)
@@ -462,25 +469,25 @@ public class ALButton: UIControl {
     /// Set icon size. Aspect Ratio is always 1:1
     /// - Parameter size: Icon side length
     public func setIconSize(_ size: CGFloat) {
-        self.iconSize = size
+        iconSize = size
     }
     
-    /// Set insets of stackview
-    public func setInsets(top: CGFloat, right: CGFloat, bottom: CGFloat, left: CGFloat) {
-        self.stackView.layoutMargins = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
+    /// Set insets of stackview. If set to nil, uses default content margins according to content. 
+    public func setInsets(_ insets: UIEdgeInsets?) {
+        customContentMargins = insets
     }
     
     /// Set spacing between icon and button label
     /// - Parameter space: Space between items
     public func setSpacing(_ space: CGFloat) {
-        self.stackView.spacing = space
+        stackView.spacing = space
     }
     
     /// Set text font
     /// - Parameters:
     ///   - font: Text Font
     public func setTextFont(_ font: UIFont?) {
-        self.textFont = font ?? UIFont.systemFont(ofSize: 18)
+        textFont = font ?? UIFont.systemFont(ofSize: 18)
     }
     
     /// Round edges
@@ -490,7 +497,7 @@ public class ALButton: UIControl {
         if isRounded {
             layer.cornerRadius = self.frame.height / 2
         } else {
-            layer.cornerRadius = cornerRadius
+            layer.cornerRadius = cornerRad
         }
     }
     

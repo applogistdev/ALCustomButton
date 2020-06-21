@@ -133,7 +133,7 @@ class MainViewController: UIViewController {
     @IBAction func cornerRadiusSliderChanged(_ sender: UISlider) {
         let cornerRad = exampleButton.bounds.height / 2
         let coefficient = CGFloat(sender.value)
-        exampleButton.cornerRadius = cornerRad * coefficient
+        exampleButton.cornerRad = cornerRad * coefficient
     }
     
     @IBAction func roundButtonTapped(_ sender: UIButton) {
