@@ -24,7 +24,7 @@ class ShowRoomViewController: UIViewController {
     }
     
     private func buttonStartYPoint(for index: Int) -> CGFloat {
-            viewHeight * 0.3
+            viewHeight * 0.2
             + buttonHeight * CGFloat(index)
             + CGFloat(index - 1) * spaceBetweenButtons
     }
@@ -35,7 +35,7 @@ class ShowRoomViewController: UIViewController {
     
     private var buttonHeight: CGFloat = 50
     
-    private var spaceBetweenButtons: CGFloat = 60
+    private var spaceBetweenButtons: CGFloat = 40
 
     
     // MARK: - View Life Cycle
@@ -43,14 +43,16 @@ class ShowRoomViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "ALCustomButton"
+        makeNavigationBarTransparent()
         
-        view.backgroundColor = .white
+        title = "ALCustomButton"
+        view.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1)
 
         makeSoundCloudButton()
         makeFacebookButton()
         makeAppleSignIn()
         makeCepYolButton()
+        makeAppleButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,8 +91,7 @@ class ShowRoomViewController: UIViewController {
         let facebookBlue = UIColor(red: 66/255, green: 103/255, blue: 178/255, alpha: 1)
         
         let fbButton = ALButton(frame: CGRect(x: buttonStartXPoint, y: buttonStartYPoint(for: 1), width: buttonWidth, height: buttonHeight))
-        fbButton.backgroundColor = .white
-        fbButton.cornerRadius = 12
+        fbButton.cornerRad = 12
         fbButton.text = "Facebook"
         fbButton.icon = #imageLiteral(resourceName: "facebook")
         fbButton.setTextColor(facebookBlue)
@@ -111,7 +112,7 @@ class ShowRoomViewController: UIViewController {
         apButton.setTextColor(.white)
          /// Human Interface Guidelines recommends using %43 of the button's height as the font size.
         apButton.setTextFont(.systemFont(ofSize: buttonHeight * 0.43, weight: .medium))
-        apButton.cornerRadius = 8
+        apButton.cornerRad = 5
         
         view.addSubview(apButton)
     }
@@ -122,6 +123,20 @@ class ShowRoomViewController: UIViewController {
         cyButton.setupCYButtonWith(title: "Find Flight Tickets")
         view.addSubview(cyButton)
     }
+    
+    private func makeAppleButton() {
+        let apButton = ALButton(frame: CGRect(x: view.center.x - 30,
+                                              y: buttonStartYPoint(for: 4),
+                                              width: 60,
+                                              height: 60))
+        apButton.backgroundColor = .clear
+        apButton.setBorder(width: 1.5, color: .black)
+        apButton.cornerRad = 6
+        apButton.icon = #imageLiteral(resourceName: "apple-dark")
+        apButton.setIconSize(30)
+        
+        view.addSubview(apButton)
+    }
 }
 
 
@@ -129,7 +144,7 @@ class ShowRoomViewController: UIViewController {
 extension ALButton {
     
     public func setupCYButtonWith(title: String) {
-        self.cornerRadius = 8
+        self.cornerRad = 8
         self.setIconAndText(icon: UIImage(named: "plane-light"), text: title)
         self.setTextColor(.white)
         self.setTextFont(.systemFont(ofSize: self.bounds.height * 0.43, weight: .semibold))
@@ -138,5 +153,15 @@ extension ALButton {
         let cepYolBlue = UIColor(red: 28/255, green: 87/255, blue: 238/255, alpha: 1)
         self.backgroundColor = cepYolBlue
         self.setShadow(color: cepYolBlue, radius: 6, offset: CGSize(width: 3, height: 4), opacity: 0.5, innerShadows: false)
+    }
+}
+
+
+extension ShowRoomViewController {
+    func makeNavigationBarTransparent()  {
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = .clear
     }
 }
